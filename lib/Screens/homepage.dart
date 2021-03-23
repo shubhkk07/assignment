@@ -14,8 +14,6 @@ class _HomePageState extends State<HomePage> {
 
   List<dynamic> searchResult;
 
-  String iid;
-
   handleSearch({String userQuery}) async {
     final List<dynamic> userlist =
         await Provider.of<ApiService>(context, listen: false)
@@ -47,22 +45,33 @@ class _HomePageState extends State<HomePage> {
             ? Container(
                 child: Center(child: Text('No items match your search')),
               )
-            : ListView.builder(
-                itemCount: searchResult.length,
-                itemBuilder: (context, index) {
-                  Data data = Data.fromJson(searchResult[index]);
-                  iid = data.objectId;
-                  return ListTile(
-                    title: Text(data.objectId),
-                    onTap: () async {
-                      await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                PostDetails(id: int.parse(data.objectId)),
-                          ));
-                    },
-                  );
-                }));
+            : Padding(
+              padding: const EdgeInsets.only(top:8),
+              child: ListView.builder(
+                  itemCount: searchResult.length,
+                  itemBuilder: (context, index) {
+                    Data data = Data.fromJson(searchResult[index]);
+
+                    return Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Card(
+                        shadowColor: Colors.grey,
+                        elevation: 3,
+                        child: ListTile(
+                          title: Text(data.title),
+                          subtitle: Text(data.objectId),
+                          onTap: () async {
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      PostDetails(id: int.parse(data.objectId)),
+                                ));
+                          },
+                        ),
+                      ),
+                    );
+                  }),
+            ));
   }
 }
