@@ -33,7 +33,9 @@ class _HomePageState extends State<HomePage> {
             decoration: InputDecoration(
               hintText: 'search',
               suffixIcon: GestureDetector(
-                  onTap: () => searchContr.clear(),
+                  onTap: () {
+                    searchContr.clear();
+                  },
                   child: Icon(
                     Icons.cancel,
                     color: Colors.black,
@@ -46,32 +48,33 @@ class _HomePageState extends State<HomePage> {
                 child: Center(child: Text('No items match your search')),
               )
             : Padding(
-              padding: const EdgeInsets.only(top:8),
-              child: ListView.builder(
-                  itemCount: searchResult.length,
-                  itemBuilder: (context, index) {
-                    Data data = Data.fromJson(searchResult[index]);
+                padding: const EdgeInsets.only(top: 8),
+                child: ListView.builder(
+                    itemCount: searchResult.length,
+                    itemBuilder: (context, index) {
+                      Data data = Data.fromJson(searchResult[index]);
 
-                    return Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Card(
-                        shadowColor: Colors.grey,
-                        elevation: 3,
-                        child: ListTile(
-                          title: Text(data.title),
-                          subtitle: Text(data.objectId),
-                          onTap: () async {
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      PostDetails(id: int.parse(data.objectId)),
-                                ));
-                          },
+                      return Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Card(
+                          shadowColor: Colors.grey,
+                          elevation: 3,
+                          child: ListTile(
+                            tileColor: Color(0xffFFF9EC),
+                            title: Text(data.title),
+                            subtitle: Text(data.objectId),
+                            onTap: () async {
+                              await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PostDetails(
+                                        id: int.parse(data.objectId)),
+                                  ));
+                            },
+                          ),
                         ),
-                      ),
-                    );
-                  }),
-            ));
+                      );
+                    }),
+              ));
   }
 }

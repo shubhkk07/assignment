@@ -60,7 +60,7 @@ class _PostDetailsState extends State<PostDetails> {
           padding: const EdgeInsets.only(top:8.0),
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.85,
+            height: MediaQuery.of(context).size.height*0.75,
             child: childList != null  
             ? ListView.builder(
                 itemCount: childList.length,
